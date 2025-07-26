@@ -14,6 +14,7 @@ conn = pyodbc.connect(
 
 cursor = conn.cursor()
 
+# Ensure table exists
 cursor.execute("""
     IF NOT EXISTS (
         SELECT * FROM sys.tables WHERE name = 'Customers'
@@ -24,9 +25,20 @@ cursor.execute("""
         Email NVARCHAR(100)
     )
 """)
-
 conn.commit()
 print("Connected and ensured table exists!")
+
+# Optional: Clear all data and reset ID counter
+# ---------------------------------------------------
+clear_data = False  # Set to True only when you want to delete all and reset IDs
+
+if clear_data:
+    cursor.execute("DELETE FROM Customers")
+    cursor.execute("DBCC CHECKIDENT ('Customers', RESEED, 0)")
+    conn.commit()
+    print("All data deleted and ID reset to start from 1.")
+
+# ---------------------------------------------------
 
 # Close connection
 cursor.close()
