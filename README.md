@@ -23,9 +23,6 @@ The main model is `Record`, which stores:
 - Zipcode
 - Created at (timestamp)
 
-## Screenshots
-
-*(Add screenshots of the UI here if desired)*
 
 ## Requirements
 
